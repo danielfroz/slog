@@ -48,8 +48,7 @@ export class Log {
   }
 
   log(level: LogLevel, msg: string|object, ...args: any[]) {
-    // const now = new Date().toISOString()
-    const now = new Date().getTime()
+    const now = Date.now()
     const record = typeof(msg) === 'object' ?
     {
       timestamp: now,
@@ -68,14 +67,11 @@ export class Log {
     if(this.options?.level != null) {
       const lvlCode = LEVELS_NUMS[level]
       const lvlConfigured = LEVELS_NUMS[this.options.level]
-      // console.log('lvlConfigured[%o] > lvlCode[%o]', lvlConfigured, lvlCode)
       if(lvlConfigured > lvlCode) {
         // do nothing
         return
       }
     }
-
-    // const fmt = `${date} [${level}] ${this.options?.prefix?this.options.prefix:''}${m}`
 
     let func: (...data: any[]) => void
     if(level === 'ERROR') {
