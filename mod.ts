@@ -31,6 +31,10 @@ export class Log {
     })
   }
 
+  trace(m: string|object, ...args: any[]) {
+    this.log('TRACE', m, ...args)
+  }
+
   debug(m: string|object, ...args: any[]) {
     this.log('DEBUG', m, ...args)
   }
