@@ -1,5 +1,14 @@
 {
   "name": "@danielfroz/slog",
-  "version": "0.1.1",
-  "exports": "./mod.ts"
+  "version": "0.1.2",
+  "exports": "./mod.ts",
+  "imports": {
+    "assert": "jsr:@std/assert",
+    "bdd": "jsr:@std/testing/bdd"
+  },
+  "lint": {
+    "include": [
+      "no-explicit-any"
+    ]
+  }
 }

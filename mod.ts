@@ -10,25 +10,37 @@ const LEVELS_NUMS = {
 }
 
 export interface LogOptions {
+  /** log level */
   level?: LogLevel,
-  prefix?: object
+  /** object which will be inserted */
+  prefix?: object,
+  /** supports custom function to send logs */
+  func?: (...data: any[]) => void
 }
 
 export class Log {
   constructor(private readonly options?: LogOptions) {}
 
   child(obj: object): Log {
-    return new Log({ 
+    const opts: LogOptions = this.options ? ({
       ...this.options,
-      prefix: obj
-    })
+      prefix: {
+        ...this.options.prefix,
+        ...obj
+      }
+    }): {}
+    return new Log(opts);
   }
 
   prefix(obj: object): Log {
-    return new Log({
+    const opts: LogOptions = this.options ? ({
       ...this.options,
-      prefix: obj
-    })
+      prefix: {
+        ...this.options.prefix,
+        ...obj
+      }
+    }): {}
+    return new Log(opts);
   }
 
   trace(m: string|object, ...args: any[]) {
@@ -79,10 +91,10 @@ export class Log {
 
     let func: (...data: any[]) => void
     if(level === 'ERROR') {
-      func = console.error
+      func = this.options?.func ? this.options.func: console.error
     }
     else {
-      func = console.log
+      func = this.options?.func ? this.options.func: console.log
     }
     func(JSON.stringify(record))
   }
