@@ -14,7 +14,7 @@ more... use another library.
 This is a example of usage
 
 ```typescript
-const log = new Log();
+const log = new ConsoleLog();
 log.info({ msg: `this is a valid log line` });
 ```
 
@@ -22,7 +22,11 @@ You may want to add prefix on all log lines from a component... As such use the
 following
 
 ```typescript
-const log = new Log({ prefix: { handler: "component", id: `${requestid}` } });
+const id = crypto.randomUUID();
+const log = new ConsoleLog({
+  level: "INFO",
+  init: { handler: "component", id },
+});
 log.info({ msg: `this is another line` });
 ```
 

@@ -1,3 +1,2 @@
 #!/bin/sh
-
-deno test .
+deno test src
