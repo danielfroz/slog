@@ -47,19 +47,28 @@ export class ConsoleLog implements Log {
 
   log(level: LogLevel, msg: string | object, ...args: any[]): void {
     const now = new Date(new Date().toUTCString()).getTime()
-    const record = typeof(msg) === 'object' ?
-    {
+    let record = {
       timestamp: now,
       level,
       ...this.options?.init,
-      ...msg,
-      ...args,
-    }: {
-      timestamp: now,
-      level,
-      ...this.options?.init,
-      msg,
-      args: args,
+    } as any
+    if(typeof(msg) === 'object') {
+      record = {
+        ...record,
+        ...msg
+      }
+    }
+    else {
+      record = {
+        ...record,
+        msg,
+      }
+    }
+    if(args && args.length > 0) {
+      record = {
+        ...record,
+        args
+      }
     }
 
     if(this.options?.level != null) {

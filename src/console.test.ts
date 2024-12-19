@@ -32,7 +32,21 @@ describe('slog testing', () => {
     assert(entries.length === 1)
     const record = JSON.parse(entries[0])
     assert(record.timestamp != null)
+    assert(record.level === 'INFO')
     assert(record.args != null && record.args.length === 1, `expected record.args as array`)
+    assert(record.args[0] === 'this is part 2', `expected to have string args`)
+  })
+
+  it('shall not log args if not needed', () => {
+    const log = new ConsoleLog({ func })
+    log.info('testing without args')
+
+    assert(entries.length === 1)
+    const record = JSON.parse(entries[0])
+    assert(record.timestamp != null)
+    assert(record.level === 'INFO')
+    assert(record.msg === 'testing without args')
+    assert(record.args == undefined)
   })
 
   it('shall log object', () => {
@@ -45,6 +59,19 @@ describe('slog testing', () => {
     assert(record.always === 'work', `always not equal to work; instead ${record.always}`)
     assert(record.msg === 'this is a simple test', `expected to have msg correctly set; but got ${record.msg}`)
     assert(record.timestamp === now, `expected timestamp to be redefined but got ${record.timestamp}`)
+  })
+
+  it('shall log object with args', () => {
+    const log = new ConsoleLog({ func })
+    log.info({ msg: `this is a simple test`}, { another: 'args come later' })
+    
+    assert(entries.length === 1)
+    const record = JSON.parse(entries[0])
+    assert(record.timestamp != null)
+    assert(record.level === 'INFO')
+    assert(record.msg === 'this is a simple test')
+    assert(record.args != null)
+    assert(typeof(record.args[0]) === 'object')
   })
 
   it('shall log ERROR, WARNING, INFO, DEBUG, TRACE if TRACE is set', () => {
