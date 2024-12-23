@@ -1,7 +1,9 @@
 import { assert } from 'assert';
+import { assertThrows } from "assert/throws";
 import { beforeEach, describe, it } from 'bdd';
 import { stub } from 'mock';
 import { ConsoleLog, Log } from "../mod.ts";
+import { LogLevel } from "./log.ts";
 
 describe('slog testing', () => {
   const entries = new Array<string>()
@@ -108,11 +110,22 @@ describe('slog testing', () => {
     assert(records.timestamp != null)
     assert(records.msg.includes('error'))
   })
-  
+
   it('shall not log INFO if WARNING', () => {
     const log = new ConsoleLog({ level: 'WARNING', func })
     log.info('shall not log this information')
     assert(entries.length === 0, `expected to filter the info log level`)
+  })
+
+  it('shall rever to default LogLevel INFO if invalid LogLevel', () => {
+    const log = new ConsoleLog({ level: 'INVALID' as LogLevel, func })
+    log.info('working fine')
+    log.debug('shall not consider this one')
+    assert(entries.length === 1, `expected to log only info level`)
+  })
+
+  it('shall fail if init is a string', () => {
+    assertThrows(() => new ConsoleLog({ init: 'string' as any }), Error, 'init.invalid')
   })
 
   it('child shall consider initial object', () => {
