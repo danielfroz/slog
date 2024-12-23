@@ -124,6 +124,10 @@ describe('slog testing', () => {
     assert(entries.length === 1, `expected to log only info level`)
   })
 
+  it('shall thrown error when invalid LogLevel and throwOnError: true', () => {
+    assertThrows(() => new ConsoleLog({ throwOnError: true }), Error, 'level.invalid')
+  })
+
   it('shall fail if init is a string', () => {
     assertThrows(() => new ConsoleLog({ init: 'string' as any }), Error, 'init.invalid')
   })
