@@ -5,16 +5,18 @@ containerized applications with Deno or Node.
 
 Nothing special really just a simple log...
 
-So why to create another log library? Well I don't need more than what is
-included... more information just leads to waste more CPU cycles ... If you need
-more... use another library.
+So why create another log library? Well I don't need more than what is
+included... more information just wastes more CPU cycles ... If you need more...
+use another library.
 
 # Usage
 
-This is a example of usage
+This is an example of usage
 
 ```typescript
-const log = new ConsoleLog();
+import { JsonLog } from "@danielfroz/slog";
+
+const log = new JsonLog();
 log.info({ msg: `this is a valid log line` });
 ```
 
@@ -23,7 +25,7 @@ following
 
 ```typescript
 const id = crypto.randomUUID();
-const log = new ConsoleLog({
+const log = new JsonLog({
   level: "INFO",
   init: { handler: "component", id },
 });
@@ -34,7 +36,7 @@ Output produced shall include the information passed.
 
 ```json
 {
-  "timestamp": 1726965019899,
+  "ts": 1764450995937,
   "level": "INFO",
   "handler": "component",
   "id": "4f8deede-cf40-455a-850e-1807f7410486",

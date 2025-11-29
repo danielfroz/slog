@@ -1,6 +1,6 @@
 {
   "name": "@danielfroz/slog",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "exports": "./mod.ts",
   "imports": {
     "assert": "jsr:@std/assert@^1.0.10",
