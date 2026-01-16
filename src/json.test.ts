@@ -1,5 +1,5 @@
-import { assert } from 'assert';
-import { assertThrows } from "assert/throws";
+import { assert } from '@std/assert';
+import { assertThrows } from "@std/assert/throws";
 import { beforeEach, describe, it } from 'bdd';
 import { stub } from 'mock';
 import { JsonLog, Log } from "../mod.ts";
